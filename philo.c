@@ -36,13 +36,14 @@ int main(void)
   for(i=0; i < 10000; i++)
   {
     pthread_mutex_lock(&mutex);
-	int next = a + 1;
-	int now = a;
-	a = next;
+	  int next = a + 1;
+	  int now = a;
+  
+	  a = next;
     pthread_mutex_unlock(&mutex);
-	if (now+1 != next) {
-	  printf("other theard change %d %d\n", a+1, next);
-	}
+    if (now+1 != next) {
+      printf("other theard change %d %d\n", a+1, next);
+    }
   }
 
   pthread_join(pthread, NULL); // pthreadで作られたスレッドが終わるまで待つ

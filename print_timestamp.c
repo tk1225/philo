@@ -18,13 +18,14 @@ void print_timestamp(struct timeval tv, int philo_num, int status)
 	printf("%d_in_ms %d %s", tv.tv_usec, philo_num, message);
 }
 
-int main(void) {
-  	struct timeval tv;
+// int main(void)
+// {
+//   	struct timeval tv;
 
-  	gettimeofday(&tv, NULL);
-	//   printf("%06d\n", tv.tv_usec);
-	//   gettimeofday(&tv, NULL);
-	//   printf("%06d\n", tv.tv_usec);
-	print_timestamp(tv, 1, 0);
-  	return 0;
-}
+//   	gettimeofday(&tv, NULL);
+// 	//   printf("%06d\n", tv.tv_usec);
+// 	//   gettimeofday(&tv, NULL);
+// 	//   printf("%06d\n", tv.tv_usec);
+// 	print_timestamp(tv, 1, 0);
+//   	return 0;
+// }
