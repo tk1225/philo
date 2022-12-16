@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+         #
+#    By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:31:13 by takuokam          #+#    #+#              #
-#    Updated: 2022/12/14 17:14:29 by takuokam         ###   ########.fr        #
+#    Updated: 2022/12/16 16:06:42 by takumasaoka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 CC		:= cc
 CFLAGS	:= -Wall -Wextra -Werror 
-SRCS	:= philo_init.c
-OBJS	:= philo_init.o
+SRCS	:= philo_init.c print_timestamp.c
+OBJS	:= philo_init.o print_timestamp.o
 LIBFTDIR	:=	./libft
 LIBFT		:=	$(LIBFTDIR)/libft.a
 

@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void print_timestamp(struct timeval tv, int philo_num, int status)
+void print_timestamp(struct timeval tv, int philo_id, int status)
 {
 	char *message;
 
@@ -15,7 +15,7 @@ void print_timestamp(struct timeval tv, int philo_num, int status)
 		message = "is thinking";
 	else if (status == DIED)
 		message = "died";
-	printf("%d_in_ms %d %s", tv.tv_usec, philo_num, message);
+	printf("%d_in_ms %d %s\n", tv.tv_usec, philo_id, message);
 }
 
 // int main(void)
