@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:36:44 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/16 17:51:36 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define INUSE 1
 # define AVAILABLE 0
 
+# define TRUE 1
+# define FALSE 0
+
 typedef struct s_philo
 {
 	int					time_to_die;
@@ -36,12 +39,13 @@ typedef struct s_philo
 	int					*fork;
 	int					philo_id;
 	int					num_philosophers;
+	int					someone_is_dead;
 	pthread_mutex_t *mutex;
-	
+	struct timeval start_time;
 }		t_philo;
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void print_timestamp(struct timeval tv, int philo_id, int status);
+void print_timestamp(struct timeval start_time, struct timeval tv, int philo_id, int status);
 
 #endif

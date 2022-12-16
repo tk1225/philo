@@ -1,8 +1,9 @@
 #include "philo.h"
 
-void print_timestamp(struct timeval tv, int philo_id, int status)
+void print_timestamp(struct timeval start_time, struct timeval tv, int philo_id, int status)
 {
 	char *message;
+	int		ms;
 
 	message = "";
 	if (status == TAKEN_FORK)
@@ -15,7 +16,8 @@ void print_timestamp(struct timeval tv, int philo_id, int status)
 		message = "is thinking";
 	else if (status == DIED)
 		message = "died";
-	printf("%d_in_ms %d %s\n", tv.tv_usec, philo_id, message);
+	ms = (tv.tv_sec - start_time.tv_sec) * 1000000 + (tv.tv_usec - start_time.tv_usec) / 10 * 10;
+	printf("%d_in_ms %d %s\n", ms, philo_id, message);
 }
 
 // int main(void)

@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:35:03 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/16 17:51:53 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ void *philosophers(void *p)
 		right_fork = &(share_data->fork[0]);
 	else
 		right_fork = &(share_data->fork[share_data->philo_id + 1]);
-
-	
 	if (*left_fork == INUSE || *right_fork == INUSE)
 	{
 		gettimeofday(&tv, NULL);
-		print_timestamp(tv, share_data->philo_id, THINKING);
+		print_timestamp(share_data->start_time, tv, share_data->philo_id, THINKING);
 	}
 	//mutex_lockで待機している場合ここに入らない
 	pthread_mutex_lock(share_data->mutex);
@@ -39,16 +37,16 @@ void *philosophers(void *p)
 		*left_fork = INUSE;
 		*right_fork = INUSE;
 		gettimeofday(&tv, NULL);
-		print_timestamp(tv, share_data->philo_id, TAKEN_FORK);
-		print_timestamp(tv, share_data->philo_id, EATING);
-		usleep(10000);
+		print_timestamp(share_data->start_time,tv, share_data->philo_id, TAKEN_FORK);
+		print_timestamp(share_data->start_time,tv, share_data->philo_id, EATING);
+		usleep(share_data->time_to_eat);
 		*left_fork = AVAILABLE;
 		*right_fork = AVAILABLE;
 	}
 	pthread_mutex_unlock(share_data->mutex);
 
-	print_timestamp(tv, share_data->philo_id, SLEEPING);
-	usleep(10000);
+	print_timestamp(share_data->start_time,tv, share_data->philo_id, SLEEPING);
+	usleep(share_data->time_to_sleep);
 	
 
 	// int i = 0;
@@ -88,6 +86,7 @@ void create_thread(t_philo *share_data, int num_philosophers)
 	{
 		tmp = share_data_copy(share_data);
 		tmp->philo_id = num_philosophers - 1;
+		gettimeofday(&tmp->start_time, NULL);
 		pthread_create(&pthread, NULL, &philosophers, tmp);
 		num_philosophers--;	
 	}
@@ -103,7 +102,6 @@ int main(int argc, char *argv[])
 	int		num_philosophers;
 	int *fork_list;
 
-	// mutex = NULL;
 	if (argc <= 1)
 		exit(EXIT_FAILURE);
 	share_data = (t_philo *)malloc(sizeof(t_philo));
@@ -117,7 +115,7 @@ int main(int argc, char *argv[])
 	share_data->mutex = &mutex;
 	share_data->fork = fork_list;
 	share_data->num_philosophers = num_philosophers;
-	
+	share_data->someone_is_dead = FALSE;
 	create_thread(share_data, num_philosophers);
 
 	// int i = 0;
