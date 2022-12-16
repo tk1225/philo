@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:14:56 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/16 17:35:03 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,20 @@ void *philosophers(void *p)
 	int *right_fork;
 
 	share_data = p;
-	pthread_mutex_lock(share_data->mutex);
 	left_fork = &(share_data->fork[share_data->philo_id]);
 	if (share_data->philo_id == share_data->num_philosophers - 1)
 		right_fork = &(share_data->fork[0]);
 	else
 		right_fork = &(share_data->fork[share_data->philo_id + 1]);
+
 	
 	if (*left_fork == INUSE || *right_fork == INUSE)
 	{
 		gettimeofday(&tv, NULL);
 		print_timestamp(tv, share_data->philo_id, THINKING);
-		while (*left_fork == INUSE || *right_fork == INUSE)
-		{
-		}
 	}
+	//mutex_lockで待機している場合ここに入らない
+	pthread_mutex_lock(share_data->mutex);
 	if (*left_fork == AVAILABLE && *right_fork == AVAILABLE)
 	{
 		*left_fork = INUSE;
@@ -42,11 +41,16 @@ void *philosophers(void *p)
 		gettimeofday(&tv, NULL);
 		print_timestamp(tv, share_data->philo_id, TAKEN_FORK);
 		print_timestamp(tv, share_data->philo_id, EATING);
-		usleep(100000);
+		usleep(10000);
 		*left_fork = AVAILABLE;
 		*right_fork = AVAILABLE;
 	}
 	pthread_mutex_unlock(share_data->mutex);
+
+	print_timestamp(tv, share_data->philo_id, SLEEPING);
+	usleep(10000);
+	
+
 	// int i = 0;
 	// printf("philo%d\n", share_data->num_philosophers);
 
