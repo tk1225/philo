@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:51:36 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/18 17:21:16 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void print_timestamp(struct timeval start_time, struct timeval tv, int philo_id, int status);
+void print_timestamp(struct timeval start_time, int philo_id, int status);
 
 #endif

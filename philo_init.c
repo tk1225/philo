@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/16 17:51:53 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/18 17:23:19 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void *philosophers(void *p)
 {
 	t_philo *share_data;
-	struct timeval tv;
+	struct timeval now;
 	int *left_fork;
 	int *right_fork;
 
@@ -27,8 +27,8 @@ void *philosophers(void *p)
 		right_fork = &(share_data->fork[share_data->philo_id + 1]);
 	if (*left_fork == INUSE || *right_fork == INUSE)
 	{
-		gettimeofday(&tv, NULL);
-		print_timestamp(share_data->start_time, tv, share_data->philo_id, THINKING);
+		gettimeofday(&now, NULL);
+		print_timestamp(share_data->start_time, share_data->philo_id, THINKING);
 	}
 	//mutex_lockで待機している場合ここに入らない
 	pthread_mutex_lock(share_data->mutex);
@@ -36,18 +36,19 @@ void *philosophers(void *p)
 	{
 		*left_fork = INUSE;
 		*right_fork = INUSE;
-		gettimeofday(&tv, NULL);
-		print_timestamp(share_data->start_time,tv, share_data->philo_id, TAKEN_FORK);
-		print_timestamp(share_data->start_time,tv, share_data->philo_id, EATING);
-		usleep(share_data->time_to_eat);
+		// gettimeofday(&now, NULL);
+		print_timestamp(share_data->start_time, share_data->philo_id, TAKEN_FORK);
+		print_timestamp(share_data->start_time, share_data->philo_id, EATING);
+		//eating time
+		usleep(share_data->time_to_eat * 1000);
 		*left_fork = AVAILABLE;
 		*right_fork = AVAILABLE;
 	}
 	pthread_mutex_unlock(share_data->mutex);
 
-	print_timestamp(share_data->start_time,tv, share_data->philo_id, SLEEPING);
-	usleep(share_data->time_to_sleep);
-	
+	// gettimeofday(&now, NULL);
+	print_timestamp(share_data->start_time, share_data->philo_id, SLEEPING);
+	usleep(share_data->time_to_sleep * 1000);
 
 	// int i = 0;
 	// printf("philo%d\n", share_data->num_philosophers);
@@ -73,6 +74,7 @@ t_philo *share_data_copy(t_philo *share_data)
 	res->time_to_eat = share_data->time_to_eat;
 	res->time_to_sleep = share_data->time_to_sleep;
 	res->num_philosophers = share_data->num_philosophers;
+	res->start_time = share_data->start_time;
 
 	return (res);
 }
@@ -82,11 +84,12 @@ void create_thread(t_philo *share_data, int num_philosophers)
 	pthread_t pthread;
 	t_philo *tmp;
 
+	gettimeofday(&share_data->start_time, NULL);
 	while (num_philosophers)
 	{
 		tmp = share_data_copy(share_data);
 		tmp->philo_id = num_philosophers - 1;
-		gettimeofday(&tmp->start_time, NULL);
+		
 		pthread_create(&pthread, NULL, &philosophers, tmp);
 		num_philosophers--;	
 	}
