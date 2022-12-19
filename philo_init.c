@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/18 17:25:27 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:56:17 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	get_mili_sec(void)
+{
+	struct timeval	now;
+	size_t		ms;
+
+	gettimeofday(&now, NULL);
+	ms = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;
+
+	return (ms);
+}
+
+void sleep_on_time (size_t sleep_time_ms)
+{
+	size_t ms;
+	struct timeval now;
+
+	gettimeofday(&now, NULL);
+	ms = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;
+	while((get_mili_sec() < ms + sleep_time_ms))
+		usleep(100);
+}
 
 void *philosophers(void *p)
 {
@@ -21,32 +43,54 @@ void *philosophers(void *p)
 
 	share_data = p;
 	left_fork = &(share_data->fork[share_data->philo_id]);
-	if (share_data->philo_id == share_data->num_philosophers - 1)
-		right_fork = &(share_data->fork[0]);
-	else
-		right_fork = &(share_data->fork[share_data->philo_id + 1]);
-	if (*left_fork == INUSE || *right_fork == INUSE)
-	{
-		gettimeofday(&now, NULL);
-		print_timestamp(share_data->start_time, share_data->philo_id, THINKING);
-	}
-	//mutex_lockで待機している場合ここに入らない
-	pthread_mutex_lock(share_data->mutex);
-	if (*left_fork == AVAILABLE && *right_fork == AVAILABLE)
-	{
-		*left_fork = INUSE;
-		*right_fork = INUSE;
-		print_timestamp(share_data->start_time, share_data->philo_id, TAKEN_FORK);
-		print_timestamp(share_data->start_time, share_data->philo_id, EATING);
-		//eating time
-		usleep(share_data->time_to_eat * 1000);
-		*left_fork = AVAILABLE;
-		*right_fork = AVAILABLE;
-	}
-	pthread_mutex_unlock(share_data->mutex);
+	right_fork = &(share_data->fork[(share_data->philo_id + 1) % share_data->num_philosophers]);
 
-	print_timestamp(share_data->start_time, share_data->philo_id, SLEEPING);
-	usleep(share_data->time_to_sleep * 1000);
+	// if (share_data->philo_id == share_data->num_philosophers - 1)
+	// 	right_fork = &(share_data->fork[0]);
+	// else
+	// 	right_fork = &(share_data->fork[share_data->philo_id + 1]);
+
+	//mutexをlistごとに分ける。
+	
+	//哲学者の行動
+	// fork がないとき　-> あくまでthinking -> 構造体に哲学者のステータスを持たせthinkingなら毎回出力しない。
+	// あるときは-> 奇数は左が先、　偶数は右を先にとる。両方INUSEに変更し、eating/sleeping
+	// -> 
+	
+	while (1)
+	{
+		if (*left_fork == INUSE || *right_fork == INUSE)
+		{
+			gettimeofday(&now, NULL);
+			print_timestamp(share_data->start_time, share_data->philo_id, THINKING);
+			sleep_on_time(10);
+		}
+		//mutex_lockで待機している場合ここに入らない
+		
+		if (*left_fork == AVAILABLE && *right_fork == AVAILABLE)
+		{
+			pthread_mutex_lock(share_data->mutex);
+			*left_fork = INUSE;
+			*right_fork = INUSE;
+			print_timestamp(share_data->start_time, share_data->philo_id, TAKEN_FORK);
+			print_timestamp(share_data->start_time, share_data->philo_id, EATING);
+			pthread_mutex_unlock(share_data->mutex);
+			//eating time
+			sleep_on_time(share_data->time_to_eat);
+			// usleep(share_data->time_to_eat * 1000);
+			pthread_mutex_lock(share_data->mutex);
+			*left_fork = AVAILABLE;
+			*right_fork = AVAILABLE;
+			pthread_mutex_unlock(share_data->mutex);
+			print_timestamp(share_data->start_time, share_data->philo_id, SLEEPING);
+			sleep_on_time(share_data->time_to_sleep);
+		}
+		
+
+		
+
+	}
+	// usleep(share_data->time_to_sleep * 1000);
 
 	// int i = 0;
 	// printf("philo%d\n", share_data->num_philosophers);
@@ -89,7 +133,7 @@ void create_thread(t_philo *share_data, int num_philosophers)
 		tmp->philo_id = num_philosophers - 1;
 		
 		pthread_create(&pthread, NULL, &philosophers, tmp);
-		num_philosophers--;	
+		num_philosophers--;
 	}
 	free(share_data);
   	pthread_join(pthread, NULL);
