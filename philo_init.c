@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/18 17:23:19 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/18 17:25:27 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void *philosophers(void *p)
 	{
 		*left_fork = INUSE;
 		*right_fork = INUSE;
-		// gettimeofday(&now, NULL);
 		print_timestamp(share_data->start_time, share_data->philo_id, TAKEN_FORK);
 		print_timestamp(share_data->start_time, share_data->philo_id, EATING);
 		//eating time
@@ -46,7 +45,6 @@ void *philosophers(void *p)
 	}
 	pthread_mutex_unlock(share_data->mutex);
 
-	// gettimeofday(&now, NULL);
 	print_timestamp(share_data->start_time, share_data->philo_id, SLEEPING);
 	usleep(share_data->time_to_sleep * 1000);
 
