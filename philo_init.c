@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/20 16:46:09 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:41:30 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void *philosophers(void *p)
 	left_fork = (share_data->mutex_fork[share_data->philo_id]);
 	right_fork = (share_data->mutex_fork[(share_data->philo_id + 1) % share_data->num_philosophers]);
 	//mutexをlistごとに分ける。
+
+	printf ("%d:%d\n", share_data->philo_id, (share_data->philo_id + 1) % share_data->num_philosophers);
+	printf ("%d:left_mutex:%p\n",  share_data->philo_id,left_fork->mutex);
+	printf ("%d:right_mutex:%p\n",  share_data->philo_id,right_fork->mutex);
+	
 	//哲学者の行動
 	// fork がないとき　-> あくまでthinking -> 構造体に哲学者のステータスを持たせthinkingなら毎回出力しない。
 	// あるときは-> 奇数は左が先、　偶数は右を先にとる。両方INUSEに変更し、eating/sleeping
@@ -68,14 +73,15 @@ void *philosophers(void *p)
 			}
 			// sleep_on_time(10);
 		}
-		pthread_mutex_unlock(left_fork->mutex);
-		pthread_mutex_unlock(right_fork->mutex);
-		// pthread_mutex_unlock(share_data->mutex);
-
-		//mutex_lockで待機している場合ここに入らない
-		// pthread_mutex_lock(share_data->mutex);
-		pthread_mutex_lock(left_fork->mutex);
-		pthread_mutex_lock(right_fork->mutex);
+		// pthread_mutex_unlock(left_fork->mutex);
+		// pthread_mutex_unlock(right_fork->mutex);
+		// // pthread_mutex_unlock(share_data->mutex);
+		
+		
+		// //mutex_lockで待機している場合ここに入らない
+		// // pthread_mutex_lock(share_data->mutex);
+		// pthread_mutex_lock(left_fork->mutex);
+		// pthread_mutex_lock(right_fork->mutex);
 		if (left_fork->status == AVAILABLE && right_fork->status == AVAILABLE)
 		{
 			left_fork->status = INUSE;
@@ -96,7 +102,6 @@ void *philosophers(void *p)
 		pthread_mutex_lock(right_fork->mutex);
 		if (left_fork->status == INUSE && right_fork->status == INUSE && share_data->status == EATING)
 		{
-				
 			left_fork->status = AVAILABLE;
 			right_fork->status = AVAILABLE;
 				
@@ -106,7 +111,7 @@ void *philosophers(void *p)
 		// pthread_mutex_unlock(share_data->mutex);
 		pthread_mutex_unlock(left_fork->mutex);
 		pthread_mutex_unlock(right_fork->mutex);
-			
+
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->time_to_sleep);
 	}
@@ -168,6 +173,7 @@ static void each_fork_init(t_fork 	**fork_struct_list, int i)
 	each_fork = (t_fork *)malloc(sizeof(t_fork));
 	pthread_mutex_init(&each_mutex, NULL);
 	each_fork->mutex = &each_mutex;
+	printf("generated_mutex%p\n", each_fork->mutex);
 	each_fork->status = AVAILABLE;
 	fork_struct_list[i] = each_fork;
 }
@@ -175,18 +181,18 @@ static void each_fork_init(t_fork 	**fork_struct_list, int i)
 int main(int argc, char *argv[])
 {
 	
-	pthread_mutex_t mutex;
+	// pthread_mutex_t mutex;
 	t_philo *share_data;
 	int		num_philosophers;
-	int *fork_list;
+	// int *fork_list;
 	t_fork 	**fork_struct_list;
 
 	if (argc <= 1)
 		exit(EXIT_FAILURE);
 	share_data = (t_philo *)malloc(sizeof(t_philo));
-	pthread_mutex_init(&mutex, NULL);
+	// pthread_mutex_init(&mutex, NULL);
 	num_philosophers = ft_atoi(argv[1]);
-	fork_list = (int *)ft_calloc(num_philosophers, sizeof(int));
+	// fork_list = (int *)ft_calloc(num_philosophers, sizeof(int));
 
 	//fork_init
 	fork_struct_list = (t_fork **)malloc(sizeof(t_fork*) * num_philosophers);
@@ -204,8 +210,8 @@ int main(int argc, char *argv[])
 	share_data->time_to_die = ft_atoi(argv[2]);
 	share_data->time_to_eat = ft_atoi(argv[3]);
 	share_data->time_to_sleep = ft_atoi(argv[4]);
-	share_data->mutex = &mutex;
-	share_data->fork = fork_list;
+	// share_data->mutex = &mutex;
+	// share_data->fork = fork_list;
 	share_data->num_philosophers = num_philosophers;
 	share_data->someone_is_dead = FALSE;
 	share_data->mutex_fork = fork_struct_list;
