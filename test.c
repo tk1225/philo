@@ -58,10 +58,7 @@ int main (void){
 		while((get_mili_sec() < ms + 100))
 		{
 			usleep(100);
-			// gettimeofday(&now, NULL);
 		}
-		
-		// usleep(100000);
 
 		gettimeofday(&now, NULL);
 		ms_wake = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;

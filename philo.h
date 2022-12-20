@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/18 17:21:16 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:28:54 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 # define TRUE 1
 # define FALSE 0
 
+typedef struct s_fork
+{
+	int					status;
+	pthread_mutex_t *mutex;
+}		t_fork;
+
 typedef struct s_philo
 {
 	int					time_to_die;
@@ -40,8 +46,10 @@ typedef struct s_philo
 	int					philo_id;
 	int					num_philosophers;
 	int					someone_is_dead;
+	int					status;
 	pthread_mutex_t *mutex;
 	struct timeval start_time;
+	t_fork			**mutex_fork;
 }		t_philo;
 
 int		ft_atoi(const char *str);
