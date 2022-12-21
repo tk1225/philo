@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/21 15:30:43 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:56:22 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ void sleep_on_time (size_t sleep_time_ms)
 		usleep(100);
 }
 
+void mutex_lock_for_odd(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork)
+{
+	pthread_mutex_lock(right_fork);
+	pthread_mutex_lock(left_fork);
+}
+
+void mutex_lock_for_even(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork)
+{
+	pthread_mutex_lock(left_fork);
+	pthread_mutex_lock(right_fork);
+}
+
+// void mutex_unlock_for_odd(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork)
+// {
+// 	pthread_mutex_unlock(right_fork);
+// 	pthread_mutex_unlock(left_fork);
+// }
+
 void *philosophers(void *p)
 {
 	t_philo *share_data;
@@ -59,8 +77,12 @@ void *philosophers(void *p)
 	while (1)
 	{
 		// pthread_mutex_lock(share_data->mutex);
-		pthread_mutex_lock(&left_fork->mutex);
-		pthread_mutex_lock(&right_fork->mutex);
+		if (share_data->philo_id % 2 == 0)
+			mutex_lock_for_even(&right_fork->mutex, &left_fork->mutex);
+		else
+			mutex_lock_for_odd(&right_fork->mutex, &left_fork->mutex);
+		// pthread_mutex_lock(&left_fork->mutex);
+		// pthread_mutex_lock(&right_fork->mutex);
 		if (left_fork->status == INUSE || right_fork->status == INUSE)
 		{
 			gettimeofday(&now, NULL);
@@ -69,17 +91,7 @@ void *philosophers(void *p)
 				share_data->status = THINKING;
 				print_timestamp(share_data->start_time, share_data->philo_id, THINKING);
 			}
-			// sleep_on_time(10);
 		}
-		// pthread_mutex_unlock(left_fork->mutex);
-		// pthread_mutex_unlock(right_fork->mutex);
-		// // pthread_mutex_unlock(share_data->mutex);
-		
-		
-		// //mutex_lockで待機している場合ここに入らない
-		// // pthread_mutex_lock(share_data->mutex);
-		// pthread_mutex_lock(left_fork->mutex);
-		// pthread_mutex_lock(right_fork->mutex);
 		if (left_fork->status == AVAILABLE && right_fork->status == AVAILABLE)
 		{
 			left_fork->status = INUSE;
@@ -95,9 +107,10 @@ void *philosophers(void *p)
 		if (share_data->status == EATING)
 			sleep_on_time(share_data->time_to_eat);
 
-		// pthread_mutex_lock(share_data->mutex);
-		pthread_mutex_lock(&left_fork->mutex);
-		pthread_mutex_lock(&right_fork->mutex);
+		if (share_data->philo_id % 2 == 0)
+			mutex_lock_for_even(&right_fork->mutex, &left_fork->mutex);
+		else
+			mutex_lock_for_odd(&right_fork->mutex, &left_fork->mutex);
 		if (left_fork->status == INUSE && right_fork->status == INUSE && share_data->status == EATING)
 		{
 			left_fork->status = AVAILABLE;
