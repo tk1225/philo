@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/20 16:28:54 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:26:34 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 typedef struct s_fork
 {
 	int					status;
-	pthread_mutex_t *mutex;
+	pthread_mutex_t 	mutex;
 }		t_fork;
 
 typedef struct s_philo

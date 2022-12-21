@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/20 17:41:30 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:30:43 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,14 @@ void *philosophers(void *p)
 	t_fork *right_fork;
 
 	share_data = p;
-	// left_fork = &(share_data->fork[share_data->philo_id]);
-	// right_fork = &(share_data->fork[(share_data->philo_id + 1) % share_data->num_philosophers]);
 
 	left_fork = (share_data->mutex_fork[share_data->philo_id]);
 	right_fork = (share_data->mutex_fork[(share_data->philo_id + 1) % share_data->num_philosophers]);
 	//mutexをlistごとに分ける。
 
-	printf ("%d:%d\n", share_data->philo_id, (share_data->philo_id + 1) % share_data->num_philosophers);
-	printf ("%d:left_mutex:%p\n",  share_data->philo_id,left_fork->mutex);
-	printf ("%d:right_mutex:%p\n",  share_data->philo_id,right_fork->mutex);
+	// printf ("%d:%d\n", share_data->philo_id, (share_data->philo_id + 1) % share_data->num_philosophers);
+	// printf ("%d:left_mutex:%p\n",  share_data->philo_id,&left_fork->mutex);
+	// printf ("%d:right_mutex:%p\n",  share_data->philo_id, &right_fork->mutex);
 	
 	//哲学者の行動
 	// fork がないとき　-> あくまでthinking -> 構造体に哲学者のステータスを持たせthinkingなら毎回出力しない。
@@ -61,8 +59,8 @@ void *philosophers(void *p)
 	while (1)
 	{
 		// pthread_mutex_lock(share_data->mutex);
-		pthread_mutex_lock(left_fork->mutex);
-		pthread_mutex_lock(right_fork->mutex);
+		pthread_mutex_lock(&left_fork->mutex);
+		pthread_mutex_lock(&right_fork->mutex);
 		if (left_fork->status == INUSE || right_fork->status == INUSE)
 		{
 			gettimeofday(&now, NULL);
@@ -91,15 +89,15 @@ void *philosophers(void *p)
 			share_data->status = EATING;
 		}
 		// pthread_mutex_unlock(share_data->mutex);
-		pthread_mutex_unlock(left_fork->mutex);
-		pthread_mutex_unlock(right_fork->mutex);
+		pthread_mutex_unlock(&left_fork->mutex);
+		pthread_mutex_unlock(&right_fork->mutex);
 		//eating time
 		if (share_data->status == EATING)
 			sleep_on_time(share_data->time_to_eat);
 
 		// pthread_mutex_lock(share_data->mutex);
-		pthread_mutex_lock(left_fork->mutex);
-		pthread_mutex_lock(right_fork->mutex);
+		pthread_mutex_lock(&left_fork->mutex);
+		pthread_mutex_lock(&right_fork->mutex);
 		if (left_fork->status == INUSE && right_fork->status == INUSE && share_data->status == EATING)
 		{
 			left_fork->status = AVAILABLE;
@@ -109,8 +107,8 @@ void *philosophers(void *p)
 			share_data->status = SLEEPING;
 		}
 		// pthread_mutex_unlock(share_data->mutex);
-		pthread_mutex_unlock(left_fork->mutex);
-		pthread_mutex_unlock(right_fork->mutex);
+		pthread_mutex_unlock(&left_fork->mutex);
+		pthread_mutex_unlock(&right_fork->mutex);
 
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->time_to_sleep);
@@ -168,12 +166,12 @@ void create_thread(t_philo *share_data, int num_philosophers)
 static void each_fork_init(t_fork 	**fork_struct_list, int i)
 {
 	t_fork *each_fork;
-	pthread_mutex_t each_mutex;
+	// pthread_mutex_t each_mutex;
 
 	each_fork = (t_fork *)malloc(sizeof(t_fork));
-	pthread_mutex_init(&each_mutex, NULL);
-	each_fork->mutex = &each_mutex;
-	printf("generated_mutex%p\n", each_fork->mutex);
+	pthread_mutex_init(&each_fork->mutex, NULL);
+	// each_fork->mutex = &each_mutex;
+	// printf("generated_mutex%p\n", &each_fork->mutex);
 	each_fork->status = AVAILABLE;
 	fork_struct_list[i] = each_fork;
 }
