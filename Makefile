@@ -6,13 +6,13 @@
 #    By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:31:13 by takuokam          #+#    #+#              #
-#    Updated: 2022/12/16 16:06:42 by takumasaoka      ###   ########.fr        #
+#    Updated: 2022/12/28 01:42:42 by takumasaoka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 CC		:= cc
-CFLAGS	:= -Wall -Wextra -Werror 
+CFLAGS	:= -Wall -Wextra -Werror -fsanitize=thread
 SRCS	:= philo_init.c print_timestamp.c
 OBJS	:= philo_init.o print_timestamp.o
 LIBFTDIR	:=	./libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/21 15:26:34 by takuokam         ###   ########.fr       */
+/*   Updated: 2022/12/28 00:58:16 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_philo
 	int					num_philosophers;
 	int					someone_is_dead;
 	int					status;
-	pthread_mutex_t *mutex;
+	int					last_meal_time;
 	struct timeval start_time;
 	t_fork			**mutex_fork;
 }		t_philo;
