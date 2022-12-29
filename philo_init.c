@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/28 02:13:10 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2022/12/28 21:00:46 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void *philosophers(void *p)
 
 	share_data = p;
 
+	gettimeofday(&share_data->start_time, NULL);
+
 	left_fork = (share_data->mutex_fork[share_data->philo_id]);
 	right_fork = (share_data->mutex_fork[(share_data->philo_id + 1) % share_data->num_philosophers]);
-	//mutexをlistごとに分ける。
-	
 	
 	// print_timestamp(share_data->start_time, share_data->philo_id, THINKING);
 
@@ -94,6 +94,7 @@ void *philosophers(void *p)
 	// fork がないとき-> あくまでthinking -> 構造体に哲学者のステータスを持たせthinkingなら毎回出力しない。
 	// あるときは-> 奇数は左が先、偶数は右を先にとる。両方INUSEに変更し、eating/sleeping
 	// ->
+
 	
 	while (1)
 	{
@@ -113,7 +114,6 @@ void *philosophers(void *p)
 		}
 		if (left_fork->status == AVAILABLE && right_fork->status == AVAILABLE)
 		{
-			
 			left_fork->status = INUSE;
 			right_fork->status = INUSE;
 			print_timestamp(share_data->start_time, share_data->philo_id, TAKEN_FORK);
@@ -138,7 +138,7 @@ void *philosophers(void *p)
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->time_to_sleep);
 		if (share_data->status == THINKING)
-			sleep_on_time(1);
+			usleep(10);
 	}
 
 	return (p);
@@ -164,17 +164,26 @@ t_philo *share_data_copy(t_philo *share_data)
 void create_thread(t_philo *share_data, int num_philosophers)
 {
 	pthread_t pthread;
-	t_philo *tmp;
-
+	t_philo *tmp[200];
+	int i;
+	
+	i = 0;
 	gettimeofday(&share_data->start_time, NULL);
-	while (num_philosophers)
+	while (i < num_philosophers)
 	{
-		tmp = share_data_copy(share_data);
-		tmp->philo_id = num_philosophers - 1;
-		tmp->status = THINKING;
-		pthread_create(&pthread, NULL, &philosophers, tmp);
-		num_philosophers--;
+		tmp[i] = share_data_copy(share_data);
+		tmp[i]->philo_id = i;
+		tmp[i]->status = THINKING;
+		
+		i++;
 	}
+	i = 0;
+	while (i < num_philosophers)
+	{
+		pthread_create(&pthread, NULL, &philosophers, tmp[i]);
+		i++;
+	}
+	
 	free(share_data);
   	pthread_join(pthread, NULL);
 }
