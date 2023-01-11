@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2022/12/28 00:58:16 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/11 19:10:30 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,29 @@ typedef struct s_fork
 	pthread_mutex_t 	mutex;
 }		t_fork;
 
-typedef struct s_philo
+typedef struct s_table
 {
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
-	int					*fork;
-	int					philo_id;
+	size_t					time_to_die;
+	size_t					time_to_eat;
+	size_t					time_to_sleep;
 	int					num_philosophers;
 	int					someone_is_dead;
-	int					status;
-	int					last_meal_time;
 	struct timeval start_time;
-	t_fork			**mutex_fork;
+}		t_table;
+
+typedef struct s_philo
+{
+	t_table				*table_data;
+	int					philo_id;
+	int					status;
+	size_t					last_meal_time;
+	t_fork				**mutex_fork;
 }		t_philo;
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 void print_timestamp(struct timeval start_time, int philo_id, int status);
+void mutex_lock(t_philo *share_data, pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
+void mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
 
 #endif
