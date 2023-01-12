@@ -3,10 +3,10 @@
 void print_timestamp(struct timeval start_time, int philo_id, int status)
 {
 	char *message;
-	size_t		ms;
-	struct timeval now;
+	// size_t		ms;
+	// struct timeval now;
 
-	gettimeofday(&now, NULL);
+	// gettimeofday(&now, NULL);
 	message = "";
 	if (status == TAKEN_FORK)
 		message = "has taken a fork";
@@ -20,13 +20,13 @@ void print_timestamp(struct timeval start_time, int philo_id, int status)
 		message = "died";
 	else if (status == 55)
 		message = "scanning**********";
-	ms = (now.tv_sec - start_time.tv_sec) * 1000 + (now.tv_usec - start_time.tv_usec) / 1000;
+	// ms = (now.tv_sec - start_time.tv_sec) * 1000 + (now.tv_usec - start_time.tv_usec) / 1000;
 	// ms =  (start_time.tv_sec) * 1000 + (start_time.tv_usec) / 1000;
 	// ms = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;
 
 	// (void)start_time;
 	// (void)now;
-	printf("%ld_in_ms %d %s\n", ms, philo_id, message);
+	printf("%d_in_ms %d %s\n", get_now_time(start_time), philo_id, message);
 }
 
 // int main(void)

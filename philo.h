@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/11 19:10:30 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/12 23:07:30 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 void print_timestamp(struct timeval start_time, int philo_id, int status);
 void mutex_lock(t_philo *share_data, pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
-void mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
+void mutex_unlock(t_philo *share_data, pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
+int get_now_time(struct timeval start_time);
+size_t	get_mili_sec(void);
 
 #endif
