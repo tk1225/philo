@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 16:39:53 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:56:43 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_philo
 	int					philo_id;
 	int					status;
 	long long int		last_meal_time;
+	int					eat_count;
 	t_fork				**mutex_fork;
 }		t_philo;
 

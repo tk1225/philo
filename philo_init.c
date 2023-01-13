@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 16:43:06 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:06:08 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void *philosophers(void *p)
 			print_timestamp(share_data->table_data->start_time, share_data->philo_id, TAKEN_FORK);
 			print_timestamp(share_data->table_data->start_time, share_data->philo_id, EATING);
 			share_data->status = EATING;
+			share_data->eat_count ++;
 			sleep_on_time(share_data->table_data->time_to_eat);
 		}
 		if (share_data->status == EATING)
@@ -77,6 +78,8 @@ void *referee(void *p)
 		ms = get_now_time(data[i]->table_data->start_time);
 		while (i < data[0]->table_data->num_philosophers)
 		{	
+			if (data[i]->eat_count >= data[i]->table_data->max_eat_count)
+				exit(1);
 			if ((ms - data[i]->last_meal_time) > data[0]->table_data->time_to_die )
 			{
 				print_timestamp(data[i]->table_data->start_time, i + 1, DIED);
@@ -115,6 +118,7 @@ void create_thread(t_philo *share_data, int num_philosophers)
 		tmp[i]->philo_id = i + 1;
 		tmp[i]->status = THINKING;
 		tmp[i]->last_meal_time = 0;
+		tmp[i]->eat_count = 0;
 		i++;
 	}
 	gettimeofday(&share_data->table_data->start_time, NULL);
