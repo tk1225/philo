@@ -6,18 +6,18 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:02:27 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:19:34 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 # define TAKEN_FORK 0
 # define EATING 1
@@ -34,7 +34,7 @@
 typedef struct s_fork
 {
 	int					status;
-	pthread_mutex_t 	mutex;
+	pthread_mutex_t		mutex;
 }		t_fork;
 
 typedef struct s_table
@@ -42,11 +42,11 @@ typedef struct s_table
 	long long int					time_to_die;
 	long long int					time_to_eat;
 	long long int					time_to_sleep;
-	int					num_philosophers;
-	int					someone_is_dead;
-	int					max_eat_count;
-	struct timeval start_time;
-	pthread_mutex_t 	action_mutex;
+	int								num_philosophers;
+	int								someone_is_dead;
+	int								max_eat_count;
+	struct timeval					start_time;
+	pthread_mutex_t					action_mutex;
 }		t_table;
 
 typedef struct s_philo
@@ -61,15 +61,15 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void print_timestamp(struct timeval start_time, int philo_id, int status, pthread_mutex_t 	*action_mutex);
-void mutex_lock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
-void mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
-int get_now_time(struct timeval start_time);
+void	print_timestamp(struct timeval start_time, \
+int philo_id, int status, pthread_mutex_t *action_mutex);
+void	mutex_lock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
+void	mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
+int		get_now_time(struct timeval start_time);
 size_t	get_mili_sec(void);
-void *philosophers(void *p);
-void sleep_on_time (size_t sleep_time_ms);
-void *referee(void *p);
-// void each_fork_init(t_fork 	**fork_struct_list, int i);
-void create_thread(t_philo *share_data, int num_philosophers);
+void	*philosophers(void *p);
+void	sleep_on_time(size_t sleep_time_ms);
+void	*referee(void *p);
+void	create_thread(t_philo *share_data, int num_philosophers);
 
 #endif

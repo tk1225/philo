@@ -6,30 +6,29 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 19:55:45 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:08:07 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_philo *share_data_copy(t_philo *share_data)
+t_philo	*share_data_copy(t_philo *share_data)
 {
-	t_philo *res;
-	
+	t_philo	*res;
+
 	res = (t_philo *)malloc(sizeof(t_philo));
 	res->philo_id = share_data->philo_id;
 	res->mutex_fork = share_data->mutex_fork;
 	res->table_data = share_data->table_data;
-
 	return (res);
 }
 
-void create_thread(t_philo *share_data, int num_philosophers)
+void	create_thread(t_philo *share_data, int num_philosophers)
 {
-	pthread_t pthread;
-	t_philo *tmp[200];
-	int i;
-	
+	pthread_t	pthread;
+	t_philo		*tmp[200];
+	int			i;
+
 	i = 0;
 	while (i < num_philosophers)
 	{
@@ -49,5 +48,5 @@ void create_thread(t_philo *share_data, int num_philosophers)
 	}
 	pthread_create(&pthread, NULL, &referee, tmp);
 	free(share_data);
-  	pthread_join(pthread, NULL);
+	pthread_join(pthread, NULL);
 }

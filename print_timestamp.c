@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_timestamp.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
+/*   Updated: 2023/01/13 20:09:12 by takuokam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void print_timestamp(struct timeval start_time, int philo_id, int status, pthread_mutex_t 	*action_mutex)
+void	print_timestamp(struct timeval start_time, \
+	int philo_id, int status, pthread_mutex_t	*action_mutex)
 {
-	char *message;
-	// (void)action_mutex;
+	char	*message;
+
 	pthread_mutex_lock(action_mutex);
 	message = "";
 	if (status == TAKEN_FORK)
