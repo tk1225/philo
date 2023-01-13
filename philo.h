@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 19:55:02 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:02:27 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_table
 	int					someone_is_dead;
 	int					max_eat_count;
 	struct timeval start_time;
+	pthread_mutex_t 	action_mutex;
 }		t_table;
 
 typedef struct s_philo
@@ -60,7 +61,7 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void print_timestamp(struct timeval start_time, int philo_id, int status);
+void print_timestamp(struct timeval start_time, int philo_id, int status, pthread_mutex_t 	*action_mutex);
 void mutex_lock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
 void mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
 int get_now_time(struct timeval start_time);

@@ -1,4 +1,0 @@
-error 対応
-食事回数のハンドル
-action mutexの初期化
-print action 時にaction mutex をロック

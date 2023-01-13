@@ -19,8 +19,8 @@ void *philosophers(void *p)
 			left_fork->status = INUSE;
 			right_fork->status = INUSE;
 			share_data->last_meal_time = get_now_time(share_data->table_data->start_time);
-			print_timestamp(share_data->table_data->start_time, share_data->philo_id, TAKEN_FORK);
-			print_timestamp(share_data->table_data->start_time, share_data->philo_id, EATING);
+			print_timestamp(share_data->table_data->start_time, share_data->philo_id, TAKEN_FORK, &share_data->table_data->action_mutex);
+			print_timestamp(share_data->table_data->start_time, share_data->philo_id, EATING, &share_data->table_data->action_mutex);
 			share_data->status = EATING;
 			share_data->eat_count ++;
 			sleep_on_time(share_data->table_data->time_to_eat);
@@ -29,14 +29,13 @@ void *philosophers(void *p)
 		{
 			left_fork->status = AVAILABLE;
 			right_fork->status = AVAILABLE;	
-			print_timestamp(share_data->table_data->start_time, share_data->philo_id, SLEEPING);
+			print_timestamp(share_data->table_data->start_time, share_data->philo_id, SLEEPING, &share_data->table_data->action_mutex);
 			share_data->status = SLEEPING;
 		}
 		mutex_unlock(&right_fork->mutex, &left_fork->mutex);
-
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->table_data->time_to_sleep);
-		print_timestamp(share_data->table_data->start_time, share_data->philo_id, THINKING);
+		print_timestamp(share_data->table_data->start_time, share_data->philo_id, THINKING, &share_data->table_data->action_mutex);
 	}
 	return (p);
 }

@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 19:54:47 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:58:08 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void fork_init(t_philo *share_data)
 		i ++;
 	}
 	share_data->mutex_fork = fork_struct_list;
+	pthread_mutex_init(&share_data->table_data->action_mutex, NULL);
 }
 
 static t_philo *share_data_init(int argc, char *argv[])

@@ -1,9 +1,10 @@
 #include "philo.h"
 
-void print_timestamp(struct timeval start_time, int philo_id, int status)
+void print_timestamp(struct timeval start_time, int philo_id, int status, pthread_mutex_t 	*action_mutex)
 {
 	char *message;
-
+	// (void)action_mutex;
+	pthread_mutex_lock(action_mutex);
 	message = "";
 	if (status == TAKEN_FORK)
 		message = "has taken a fork";
@@ -18,6 +19,7 @@ void print_timestamp(struct timeval start_time, int philo_id, int status)
 	else if (status == DIED)
 		message = "died";
 	printf("%d_in_ms %d %s\n", get_now_time(start_time), philo_id, message);
+	pthread_mutex_unlock(action_mutex);
 }
 
 // int main(void)
