@@ -11,9 +11,12 @@ void print_timestamp(struct timeval start_time, int philo_id, int status)
 	if (status == TAKEN_FORK)
 		message = "has taken a fork";
 	else if (status == EATING)
-		message = "is eating";
+	{
+		message = "\x1b[31mis eating\x1b[39m";
+		
+	}
 	else if (status == SLEEPING)
-		message = "is sleeping";
+		message = "\x1b[34mis sleeping\x1b[39m";
 	else if (status == THINKING)
 		message = "is thinking";
 	else if (status == DIED)

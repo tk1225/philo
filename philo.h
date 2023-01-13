@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/12 23:07:30 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:00:25 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ typedef struct s_fork
 
 typedef struct s_table
 {
-	size_t					time_to_die;
-	size_t					time_to_eat;
-	size_t					time_to_sleep;
+	long long int					time_to_die;
+	long long int					time_to_eat;
+	long long int					time_to_sleep;
 	int					num_philosophers;
 	int					someone_is_dead;
 	struct timeval start_time;
@@ -52,7 +52,7 @@ typedef struct s_philo
 	t_table				*table_data;
 	int					philo_id;
 	int					status;
-	size_t					last_meal_time;
+	long long int		last_meal_time;
 	t_fork				**mutex_fork;
 }		t_philo;
 

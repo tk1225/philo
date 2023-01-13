@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/12 23:08:12 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:00:38 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ void *philosophers(void *p)
 	while (1)
 	{
 		mutex_lock(share_data, &right_fork->mutex, &left_fork->mutex);
-		if (left_fork->status == INUSE || right_fork->status == INUSE)
-		{
-			if (share_data->status != THINKING)
-			{
-				share_data->status = THINKING;
-				print_timestamp(share_data->table_data->start_time, share_data->philo_id, THINKING);
-			}
-		}
+		// if (left_fork->status == INUSE || right_fork->status == INUSE)
+		// {
+		// 	if (share_data->status != THINKING)
+		// 	{
+		// 		share_data->status = THINKING;
+		// 		print_timestamp(share_data->table_data->start_time, share_data->philo_id, THINKING);
+		// 		// usleep(1000);
+		// 	}
+		// }
 		if (left_fork->status == AVAILABLE && right_fork->status == AVAILABLE)
 		{
 			left_fork->status = INUSE;
@@ -62,25 +63,28 @@ void *philosophers(void *p)
 			print_timestamp(share_data->table_data->start_time, share_data->philo_id, TAKEN_FORK);
 			print_timestamp(share_data->table_data->start_time, share_data->philo_id, EATING);
 			share_data->status = EATING;
-		}
-		mutex_unlock(share_data, &right_fork->mutex, &left_fork->mutex);
-
-		if (share_data->status == EATING)
 			sleep_on_time(share_data->table_data->time_to_eat);
+		}
 
+		// if (share_data->status == EATING)
 		if (share_data->status == EATING)
 		{
-			mutex_lock(share_data, &right_fork->mutex, &left_fork->mutex);
+			// mutex_lock(share_data, &right_fork->mutex, &left_fork->mutex);
 			left_fork->status = AVAILABLE;
 			right_fork->status = AVAILABLE;	
 			print_timestamp(share_data->table_data->start_time, share_data->philo_id, SLEEPING);
 			share_data->status = SLEEPING;
-			mutex_unlock(share_data, &right_fork->mutex, &left_fork->mutex);
+			// mutex_unlock(share_data, &right_fork->mutex, &left_fork->mutex);
 		}
+		mutex_unlock(share_data, &right_fork->mutex, &left_fork->mutex);
+
+		
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->table_data->time_to_sleep);
-		if (share_data->status == THINKING)
-			usleep(10);
+		// if (share_data->status == THINKING)
+		print_timestamp(share_data->table_data->start_time, share_data->philo_id, THINKING);
+
+			// usleep(10);
 	}
 
 	return (p);
@@ -108,6 +112,8 @@ void *referee(void *p)
 			if ((ms - data[i]->last_meal_time) > data[0]->table_data->time_to_die )
 			{
 				print_timestamp(data[i]->table_data->start_time, i + 1, DIED);
+				printf("ms%d\n", ms);
+				printf("lastmealtime%lld", data[i]->last_meal_time);
 				exit(0);
 			}
 			i++;
