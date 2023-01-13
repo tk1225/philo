@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:40:20 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/12 20:47:55 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:36:14 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ size_t	get_mili_sec(void)
 	ms = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;
 
 	return (ms);
+}
+
+void sleep_on_time (size_t sleep_time_ms)
+{
+	size_t ms;
+	struct timeval now;
+
+	gettimeofday(&now, NULL);
+	ms = (now.tv_sec) * 1000 + (now.tv_usec) / 1000;
+	while((get_mili_sec() < ms + sleep_time_ms))
+		usleep(100);
 }
 
 
