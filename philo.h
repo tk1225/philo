@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 16:00:25 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:39:53 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_table
 	long long int					time_to_sleep;
 	int					num_philosophers;
 	int					someone_is_dead;
+	int					max_eat_count;
 	struct timeval start_time;
 }		t_table;
 

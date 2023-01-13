@@ -13,7 +13,6 @@ void print_timestamp(struct timeval start_time, int philo_id, int status)
 	else if (status == EATING)
 	{
 		message = "\x1b[31mis eating\x1b[39m";
-		
 	}
 	else if (status == SLEEPING)
 		message = "\x1b[34mis sleeping\x1b[39m";
