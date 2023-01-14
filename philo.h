@@ -6,13 +6,14 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:19:34 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:15:21 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>

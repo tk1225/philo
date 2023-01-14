@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/26 15:58:05 by takuokam          #+#    #+#             */
-/*   Updated: 2022/11/01 17:17:01 by takumasaoka      ###   ########.fr       */
+/*   Created: 2023/01/14 16:15:36 by takuokam          #+#    #+#             */
+/*   Updated: 2023/01/14 16:15:37 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
 static int	ft_overflow_checker(const char *str, long res, int i, int minus)
 {
@@ -67,37 +67,35 @@ int	ft_atoi(const char *str)
 	return (ft_atoi_helper(str, res, i, minus));
 }
 
-// #include <stdio.h>
-// #include <string.h>
-// #include <stdlib.h>
+void	*ft_memset(void *target_input, int insert, size_t num)
+{
+	unsigned char	*target;
+	unsigned char	for_insert;
 
-// int	main(void)
-// {
-// 	char sample[15][30]={
-// 		"-42",
-// 		"9223372036854775808",//LONGMAX + 1
-// 		"9223372036854775809",//LONGMAX + 2
-// 		"9223372036854775908",//LONGMAX + 101
-// 		"9223372036854775807",//LONGMAX
-// 		"-9223372036854775809",//LONGMIN - 1
-// 		"18446744073709551615",//ULONGMAX
-// 		"18446744073709551616",//ULONGMAX + 1
-// 		"18446744073709551614",//ULONGMAX - 1
-// 		// "G5",
-// 		// "1 2 3",
-// 		// "   1   ",
-// 		// "1,2,3",
-// 		// "--42",
-// 		// "++42",
-// 		// "-+42",
-// 		// "+-42",
-// 	};
-// 	int i = 0;
-// 	while (i < 6)
-// 	{
-// 		//if (ft_atoi(sample[i]) != atoi(sample[i]))
-// 		printf("error%d:ans:%d\n",ft_atoi(sample[i]),atoi(sample[i]));
-// 		i ++;
-// 	}
-// 	return (0);
-// }
+	for_insert = (unsigned char)insert;
+	target = (unsigned char *)target_input;
+	while (num > 0)
+	{
+		*target = for_insert;
+		num --;
+		target ++;
+	}
+	return (target_input);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*p;
+
+	if (size == 0 || nmemb == 0)
+		return ((void *) malloc (nmemb * size));
+	if (nmemb > SIZE_T_MAX / size)
+		return (NULL);
+	p = (void *) malloc (nmemb * size);
+	if (p == NULL)
+		return (NULL);
+	ft_memset(p, 0, nmemb * size);
+	return (p);
+}
+
+

@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:20:11 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:17:48 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_philo	*share_data_init(int argc, char *argv[])
 	t_philo	*share_data;
 
 	if (argc <= 1 || argc <= 4)
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	share_data = (t_philo *)malloc(sizeof(t_philo));
 	share_data->table_data = (t_table *)malloc(sizeof(t_table));
 	share_data->table_data->num_philosophers = ft_atoi(argv[1]);
