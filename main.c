@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:10:41 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:27:54 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ static t_philo	*share_data_init(int argc, char *argv[])
 	return (share_data);
 }
 
-// int check_share_data(t_table *table_data)
-// {
-// 	if ((table_data->max_eat_count == 0) || (table_data->num_philosophers == 0) || \
-// 	(table_data->time_to_eat == 0) || (table_data->time_to_die == 0) || table_data->time_to_sleep == 0)
-// }
+int check_table_data(t_table *table_data, int argc)
+{
+	if (((table_data->max_eat_count <= 0) && argc == 6) || (table_data->num_philosophers <= 0) || \
+	(table_data->time_to_eat <= 0) || (table_data->time_to_die <= 0) || table_data->time_to_sleep <= 0)
+		return (FALSE);
+	return (TRUE);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -67,7 +69,8 @@ int	main(int argc, char *argv[])
 	if (argc <= 1 || argc <= 4)
 		return (0);
 	share_data = share_data_init(argc, argv);
-	
+	if (check_table_data(share_data->table_data, argc) == FALSE)
+		return (0);
 	fork_init(share_data);
 	create_thread(share_data, share_data->table_data->num_philosophers);
 	return (0);
