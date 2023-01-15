@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:38:00 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/14 16:19:00 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 16:51:39 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*referee(void *p)
 		i = 0;
 		ms = get_now_time(data[i]->table_data->start_time);
 		while (i < data[0]->table_data->num_philosophers)
-		{	
+		{
 			if ((data[i]->table_data->max_eat_count != 0) && \
 			(data[i]->eat_count >= data[i]->table_data->max_eat_count))
 				// break ;
