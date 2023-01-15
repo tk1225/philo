@@ -6,18 +6,20 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:09:12 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:17:22 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	print_timestamp(struct timeval start_time, \
-	int philo_id, int status, pthread_mutex_t	*action_mutex)
+	int philo_id, int status, t_table	*table_data)
 {
 	char	*message;
 
-	pthread_mutex_lock(action_mutex);
+	pthread_mutex_lock(&table_data->action_mutex);
+	if (table_data->all_living == FALSE)
+		return ;
 	message = "";
 	if (status == TAKEN_FORK)
 		message = "has taken a fork";
@@ -32,7 +34,7 @@ void	print_timestamp(struct timeval start_time, \
 	else if (status == DIED)
 		message = "died";
 	printf("%d_in_ms %d %s\n", get_now_time(start_time), philo_id, message);
-	pthread_mutex_unlock(action_mutex);
+	pthread_mutex_unlock(&table_data->action_mutex);
 }
 
 // int main(void)

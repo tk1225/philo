@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:38:00 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 16:51:39 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:19:34 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*referee(void *p)
 	int		ms;
 
 	data = p;
-	while (1)
+	while (data[0]->table_data->all_living)
 	{
 		i = 0;
 		ms = get_now_time(data[i]->table_data->start_time);
@@ -27,13 +27,17 @@ void	*referee(void *p)
 		{
 			if ((data[i]->table_data->max_eat_count != 0) && \
 			(data[i]->eat_count >= data[i]->table_data->max_eat_count))
-				// break ;
+			{
+				data[0]->table_data->all_living = FALSE;
+				break ;
+			}
 			if ((ms - data[i]->last_meal_time) > \
 			data[0]->table_data->time_to_die)
 			{
 				print_timestamp(data[i]->table_data->start_time, \
-				i + 1, DIED, &data[i]->table_data->action_mutex);
-				// break ;
+				i + 1, DIED, data[i]->table_data);
+				data[0]->table_data->all_living = FALSE;
+				break ;
 			}
 			i++;
 		}

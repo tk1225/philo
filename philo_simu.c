@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:15 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:17:55 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:19:24 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_fork *left_fork, t_fork	*right_fork)
 		get_now_time(share_data->table_data->start_time);
 		print_timestamp(share_data->table_data->start_time, \
 		share_data->philo_id, TAKEN_FORK, \
-		&share_data->table_data->action_mutex);
+		share_data->table_data);
 		print_timestamp(share_data->table_data->start_time, \
-		share_data->philo_id, EATING, &share_data->table_data->action_mutex);
+		share_data->philo_id, EATING, share_data->table_data);
 		share_data->status = EATING;
 		share_data->eat_count ++;
 		sleep_on_time(share_data->table_data->time_to_eat);
@@ -36,7 +36,7 @@ t_fork *left_fork, t_fork	*right_fork)
 		left_fork->status = AVAILABLE;
 		right_fork->status = AVAILABLE;
 		print_timestamp(share_data->table_data->start_time, \
-		share_data->philo_id, SLEEPING, &share_data->table_data->action_mutex);
+		share_data->philo_id, SLEEPING, share_data->table_data);
 		share_data->status = SLEEPING;
 	}
 	mutex_unlock(&right_fork->mutex, &left_fork->mutex);
@@ -54,13 +54,13 @@ void	*philosophers(void *p)
 	share_data->table_data->num_philosophers]);
 	if (share_data->philo_id % 2 == 0)
 		usleep(15000);
-	while (1)
+	while (share_data->table_data->all_living)
 	{
 		philo_action(share_data, left_fork, right_fork);
 		if (share_data->status == SLEEPING)
 			sleep_on_time(share_data->table_data->time_to_sleep);
 		print_timestamp(share_data->table_data->start_time, \
-		share_data->philo_id, THINKING, &share_data->table_data->action_mutex);
+		share_data->philo_id, THINKING, share_data->table_data);
 	}
 	return (p);
 }

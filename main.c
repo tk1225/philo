@@ -6,7 +6,7 @@
 /*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 16:53:07 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:10:41 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,23 @@ static t_philo	*share_data_init(int argc, char *argv[])
 	share_data->table_data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		share_data->table_data->max_eat_count = ft_atoi(argv[5]);
-	share_data->table_data->someone_is_dead = FALSE;
+	share_data->table_data->all_living = TRUE;
 	return (share_data);
 }
+
+// int check_share_data(t_table *table_data)
+// {
+// 	if ((table_data->max_eat_count == 0) || (table_data->num_philosophers == 0) || \
+// 	(table_data->time_to_eat == 0) || (table_data->time_to_die == 0) || table_data->time_to_sleep == 0)
+// }
 
 int	main(int argc, char *argv[])
 {
 	t_philo	*share_data;
 	if (argc <= 1 || argc <= 4)
-		return ;
+		return (0);
 	share_data = share_data_init(argc, argv);
+	
 	fork_init(share_data);
 	create_thread(share_data, share_data->table_data->num_philosophers);
 	return (0);
