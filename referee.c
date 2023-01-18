@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   referee.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:38:00 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:19:34 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:07:59 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	*referee(void *p)
 	data = p;
 	while (data[0]->table_data->all_living)
 	{
+		// usleep(10);
 		i = 0;
 		ms = get_now_time(data[i]->table_data->start_time);
 		while (i < data[0]->table_data->num_philosophers)
@@ -37,6 +38,8 @@ void	*referee(void *p)
 				print_timestamp(data[i]->table_data->start_time, \
 				i + 1, DIED, data[i]->table_data);
 				data[0]->table_data->all_living = FALSE;
+				printf("lastmeal%lld", data[i]->last_meal_time);
+				printf("ms%d", ms);
 				break ;
 			}
 			i++;

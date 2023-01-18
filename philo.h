@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:18:50 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:46:13 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	*philosophers(void *p);
 void	sleep_on_time(size_t sleep_time_ms);
 void	*referee(void *p);
 void	create_thread(t_philo *share_data, int num_philosophers);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif

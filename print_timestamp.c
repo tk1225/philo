@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_timestamp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:17:22 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:51:37 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ void	print_timestamp(struct timeval start_time, \
 		message = "is thinking";
 	else if (status == DIED)
 		message = "died";
-	printf("%d_in_ms %d %s\n", get_now_time(start_time), philo_id, message);
+	// get_now_time(start_time
+	// (void)start_time;
+	// (void)message;
+	// (void)philo_id;
+	
+	// ft_putstr_fd("test", 1);
+	
+	printf("%d_in_ms %d %s\n", get_now_time(start_time) ,philo_id, message);
 	pthread_mutex_unlock(&table_data->action_mutex);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 16:15:36 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/14 16:15:37 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:45:59 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,15 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (p);
 }
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s == NULL)
+		return ;
+	while (*s != '\0')
+	{
+		write(fd, s, 1);
+		s ++;
+	}
+	return ;
+}
 

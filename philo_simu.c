@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_simu.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:15 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:19:24 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:57:07 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
