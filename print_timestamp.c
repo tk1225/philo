@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/22 19:38:30 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/22 20:09:33 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_timestamp(t_philo *share_data, \
 	int philo_id, int status, t_table	*table_data)
 {
 	char	*message;
-	int now;
+	int		now;
 
 	pthread_mutex_lock(&table_data->action_mutex);
 	if (table_data->all_living == FALSE)
@@ -35,17 +35,21 @@ void	print_timestamp(t_philo *share_data, \
 		message = "\x1b[34mis sleeping\x1b[39m";
 	else if (status == THINKING)
 		message = "is thinking";
-	else if (status == DIED)
-		message = "died";
-	// get_now_time(start_time
-	// (void)start_time;
-	// (void)message;
-	// (void)philo_id;
-	
-	// ft_putstr_fd("test", 1);
-	
-	printf("%d_in_ms %d %s\n", now ,philo_id, message);
+	printf("%d_in_ms %d %s\n", now, philo_id, message);
 	pthread_mutex_unlock(&table_data->action_mutex);
+}
+
+void	print_die(t_philo *share_data, \
+	int philo_id, t_table	*table_data)
+{
+	char	*message;
+	int		now;
+
+	if (table_data->all_living == FALSE)
+		return ;
+	message = "died";
+	now = get_now_time(share_data->table_data->start_time);
+	printf("%d_in_ms %d %s\n", now, philo_id, message);
 }
 
 // int main(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/15 17:27:54 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:07:48 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ static t_philo	*share_data_init(int argc, char *argv[])
 	return (share_data);
 }
 
-int check_table_data(t_table *table_data, int argc)
+int	check_table_data(t_table *table_data, int argc)
 {
-	if (((table_data->max_eat_count <= 0) && argc == 6) || (table_data->num_philosophers <= 0) || \
-	(table_data->time_to_eat <= 0) || (table_data->time_to_die <= 0) || table_data->time_to_sleep <= 0)
+	if (((table_data->max_eat_count <= 0) && argc == 6) \
+	|| (table_data->num_philosophers <= 0) || \
+	(table_data->time_to_eat <= 0) || (table_data->time_to_die <= 0) \
+	|| table_data->time_to_sleep <= 0)
 		return (FALSE);
 	return (TRUE);
 }
@@ -66,6 +68,7 @@ int check_table_data(t_table *table_data, int argc)
 int	main(int argc, char *argv[])
 {
 	t_philo	*share_data;
+
 	if (argc <= 1 || argc <= 4)
 		return (0);
 	share_data = share_data_init(argc, argv);

@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/22 19:16:14 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/22 20:01:43 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ void	sleep_on_time(size_t sleep_time_ms);
 void	*referee(void *p);
 void	create_thread(t_philo *share_data, int num_philosophers);
 void	ft_putstr_fd(char *s, int fd);
+void	print_die(t_philo *share_data, \
+	int philo_id, t_table	*table_data);
 
 #endif

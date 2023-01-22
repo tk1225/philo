@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:15 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/22 19:40:12 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/22 20:08:04 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ t_fork *left_fork, t_fork	*right_fork)
 	{
 		left_fork->status = INUSE;
 		right_fork->status = INUSE;
-		// share_data->last_meal_time = get_now_time(share_data->table_data->start_time);
 		print_timestamp(share_data, \
 		share_data->philo_id, TAKEN_FORK, \
 		share_data->table_data);
 		print_timestamp(share_data, \
 		share_data->philo_id, EATING, share_data->table_data);
 		share_data->status = EATING;
-		// share_data->eat_count ++;
 		sleep_on_time(share_data->table_data->time_to_eat);
 	}
 	if (share_data->status == EATING)
