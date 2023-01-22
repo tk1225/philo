@@ -6,26 +6,30 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/18 19:51:37 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/22 19:38:30 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_timestamp(struct timeval start_time, \
+void	print_timestamp(t_philo *share_data, \
 	int philo_id, int status, t_table	*table_data)
 {
 	char	*message;
+	int now;
 
 	pthread_mutex_lock(&table_data->action_mutex);
 	if (table_data->all_living == FALSE)
 		return ;
 	message = "";
+	now = get_now_time(share_data->table_data->start_time);
 	if (status == TAKEN_FORK)
 		message = "has taken a fork";
 	else if (status == EATING)
 	{
 		message = "\x1b[31mis eating\x1b[39m";
+		share_data->last_meal_time = now;
+		share_data->eat_count ++;
 	}
 	else if (status == SLEEPING)
 		message = "\x1b[34mis sleeping\x1b[39m";
@@ -40,7 +44,7 @@ void	print_timestamp(struct timeval start_time, \
 	
 	// ft_putstr_fd("test", 1);
 	
-	printf("%d_in_ms %d %s\n", get_now_time(start_time) ,philo_id, message);
+	printf("%d_in_ms %d %s\n", now ,philo_id, message);
 	pthread_mutex_unlock(&table_data->action_mutex);
 }
 

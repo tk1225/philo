@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:50:11 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/18 19:46:13 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/22 19:16:14 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_philo
 
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	print_timestamp(struct timeval start_time, \
+void	print_timestamp(t_philo *share_data, \
 int philo_id, int status, t_table *table_data);
 void	mutex_lock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);
 void	mutex_unlock(pthread_mutex_t *right_fork, pthread_mutex_t *left_fork);

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+         #
+#    By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:31:13 by takuokam          #+#    #+#              #
-#    Updated: 2023/01/14 16:16:44 by takuokam         ###   ########.fr        #
+#    Updated: 2023/01/22 19:46:16 by takumasaoka      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 CCdfr		:= cc
 CFLAGS	:= -Wall -Wextra -Werror 
-#-fsanitize=thread
+# -fsanitize=thread
 # void *referee(void *p)
 SRCS	:= philo_init.c print_timestamp.c mutex_handle.c time_utils.c philo_simu.c referee.c main.c libft_utils.c
 OBJS	:= philo_init.o print_timestamp.o mutex_handle.o time_utils.o philo_simu.o referee.o main.o libft_utils.o
