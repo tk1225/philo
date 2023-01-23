@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:15 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/22 20:08:04 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/23 19:12:16 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*philosophers(void *p)
 	share_data->table_data->num_philosophers]);
 	if (share_data->philo_id % 2 == 0)
 		usleep(15000);
-	while (share_data->table_data->all_living)
+	while (1)
 	{
 		philo_action(share_data, left_fork, right_fork);
 		if (share_data->status == SLEEPING)
