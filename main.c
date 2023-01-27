@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/27 13:40:24 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:10:15 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_table_data(t_table *table_data, int argc)
 	if (((table_data->max_eat_count <= 0) && argc == 6) \
 	|| (table_data->num_philosophers <= 0) || \
 	(table_data->time_to_eat <= 0) || (table_data->time_to_die <= 0) \
-	|| table_data->time_to_sleep <= 0)
+	|| table_data->time_to_sleep <= 0 || (table_data->num_philosophers >= 201))
 		return (FALSE);
 	return (TRUE);
 }
@@ -74,17 +74,26 @@ int	main(int argc, char *argv[])
 		return (0);
 	share_data = share_data_init(argc, argv);
 	if (check_table_data(share_data->table_data, argc) == FALSE)
+	{
+		free(share_data->table_data);
+		free(share_data);
+		write(0, "error\n", 6);
 		return (0);
+	}
 	fork_init(share_data);
 	create_thread(share_data, share_data->table_data->num_philosophers);
 	i = 0;
 	while (i < share_data->table_data->num_philosophers)
+	{
 		free(share_data->mutex_fork[i]);
+		i ++;
+	}
 	free(share_data->mutex_fork);
 	free(share_data);
 	return (0);
 }
 
-__attribute__((destructor)) static void destructor(){
-	system("leaks -q philo");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q philo");
+// }

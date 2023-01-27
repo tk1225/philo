@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:15 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/27 13:36:22 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/27 14:07:45 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	*philosophers(void *p)
 		print_timestamp(share_data, \
 		share_data->philo_id, THINKING, share_data->table_data);
 	}
-	free(share_data->table_data);
 	free(share_data);
 	return (p);
 }

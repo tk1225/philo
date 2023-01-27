@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:08:35 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/23 19:12:44 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/27 14:12:08 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_timestamp(t_philo *share_data, \
 		pthread_mutex_unlock(&table_data->action_mutex);
 		return ;
 	}
-		// return ;
 	message = "";
 	now = get_now_time(share_data->table_data->start_time);
 	if (status == TAKEN_FORK)
