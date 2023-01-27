@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
+/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/27 13:36:53 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/27 13:40:24 by takuokam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,8 @@ int	main(int argc, char *argv[])
 	free(share_data->mutex_fork);
 	free(share_data);
 	return (0);
+}
+
+__attribute__((destructor)) static void destructor(){
+	system("leaks -q philo");
 }
