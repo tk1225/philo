@@ -6,7 +6,7 @@
 /*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:41:26 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/22 20:07:48 by takumasaoka      ###   ########.fr       */
+/*   Updated: 2023/01/27 13:36:53 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	check_table_data(t_table *table_data, int argc)
 int	main(int argc, char *argv[])
 {
 	t_philo	*share_data;
+	int		i;
 
 	if (argc <= 1 || argc <= 4)
 		return (0);
@@ -76,5 +77,10 @@ int	main(int argc, char *argv[])
 		return (0);
 	fork_init(share_data);
 	create_thread(share_data, share_data->table_data->num_philosophers);
+	i = 0;
+	while (i < share_data->table_data->num_philosophers)
+		free(share_data->mutex_fork[i]);
+	free(share_data->mutex_fork);
+	free(share_data);
 	return (0);
 }

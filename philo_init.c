@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: takuokam <takuokam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: takumasaokamoto <takumasaokamoto@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:00:53 by takuokam          #+#    #+#             */
-/*   Updated: 2023/01/13 20:08:07 by takuokam         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:36:05 by takumasaoka      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,5 @@ void	create_thread(t_philo *share_data, int num_philosophers)
 		i++;
 	}
 	pthread_create(&pthread, NULL, &referee, tmp);
-	free(share_data);
 	pthread_join(pthread, NULL);
 }
